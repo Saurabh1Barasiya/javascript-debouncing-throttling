@@ -8,8 +8,8 @@ function throuttle(func,delay){
     return function(...args){
         if(!waiting){
             waiting = true;
+            func.call(this,...args);   // 🔥 runs immediately.
             setTimeout(()=>{
-                func.call(this,...args);
                 waiting = false;
             },delay)
         }
@@ -19,6 +19,7 @@ function throuttle(func,delay){
 const throttledMouseMove = throuttle(function(){
     count += 1;
     console.log(count);
-},1000);
+},10000);
+
 
 body.addEventListener("mousemove",throttledMouseMove);
